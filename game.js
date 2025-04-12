@@ -132,6 +132,8 @@ const coin = {
         // Check for collision with ground or ceiling
         if (this.y + this.height/2 > canvas.height || this.y - this.height/2 < 0) {
             gameOver = true;
+            // Clear trail when game is over
+            this.trail = [];
         }
     },
     jump() {
