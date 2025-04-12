@@ -219,7 +219,20 @@ class Pipe {
         this.movementRange = 80; // Reduced movement range
         this.originalTop = this.top; // Store original position
         // Add special pipe properties
-        this.isSpecial = Math.random() < 0.05; // 5% chance to be special
+        const random = Math.random();
+        if (random < 0.005) { // 0.5% chance for yellow pipe
+            this.isSpecial = true;
+            this.specialType = 'yellow';
+            this.bonusPoints = 10;
+        } else if (random < 0.055) { // 5% chance for green pipe
+            this.isSpecial = true;
+            this.specialType = 'green';
+            this.bonusPoints = 3;
+        } else {
+            this.isSpecial = false;
+            this.specialType = 'normal';
+            this.bonusPoints = 1;
+        }
         this.collected = false;
     }
     
@@ -256,15 +269,16 @@ class Pipe {
             this.passed = true;
             if (this.isSpecial && !this.collected) {
                 this.collected = true;
-                score += 3;
+                score += this.bonusPoints;
                 scoreElement.textContent = `Score: ${score}`;
                 
                 // Create particle explosion
-                for (let i = 0; i < 20; i++) {
+                const particleColor = this.specialType === 'yellow' ? '#FFD700' : '#4CAF50';
+                for (let i = 0; i < 30; i++) {
                     particles.push(new Particle(
                         this.x + this.width/2,
                         this.top + PIPE_GAP/2,
-                        '#4CAF50'
+                        particleColor
                     ));
                 }
                 
@@ -272,7 +286,7 @@ class Pipe {
                 scorePopups.push(new ScorePopup(
                     this.x + this.width/2,
                     this.top + PIPE_GAP/2,
-                    3
+                    this.bonusPoints
                 ));
                 
                 if (!gameOver) {
@@ -298,7 +312,7 @@ class Pipe {
     
     draw() {
         if (this.isSpecial) {
-            ctx.fillStyle = '#4CAF50'; // Green color for special pipe
+            ctx.fillStyle = this.specialType === 'yellow' ? '#FFD700' : '#4CAF50';
         } else {
             ctx.fillStyle = '#333';
         }
