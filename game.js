@@ -407,15 +407,7 @@ function handleJump() {
         stopAllSounds();
         
         // Reset game
-        score = 0;
-        currentSpeed = BASE_PIPE_SPEED;  // Reset speed
-        scoreElement.textContent = `Score: ${score}`;
-        pipes.length = 0;
-        coin.y = canvas.height / 2;
-        coin.velocity = 0;
-        gameOver = false;
-        gameStarted = false;
-        lastPipeSpawn = 0;
+        resetGame();
         
         // Start new game loop
         gameLoop(0);
@@ -467,4 +459,21 @@ const shadowButton = document.getElementById('shadowButton');
 shadowButton.addEventListener('click', () => {
     coin.shadowEnabled = !coin.shadowEnabled;
     shadowButton.textContent = coin.shadowEnabled ? '👥 Shadow: On' : '👥 Shadow: Off';
-}); 
+});
+
+function resetGame() {
+    coin.x = canvas.width / 2;
+    coin.y = canvas.height / 2;
+    coin.velocity = 0;
+    pipes.length = 0;
+    score = 0;
+    currentSpeed = BASE_PIPE_SPEED;
+    gameStarted = false;
+    gameOver = false;
+    scoreElement.textContent = `Score: ${score}`;
+    // Clear shadow trail
+    coin.trail = [];
+    // Clear particles and score popups
+    particles = [];
+    scorePopups = [];
+} 
