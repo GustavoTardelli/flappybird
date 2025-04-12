@@ -71,7 +71,7 @@ A modern take on the classic Flappy Bird game, featuring the Solana cryptocurren
 
 ## 👥 Credits
 
-Created by RandomDev
+Created by Santoscapital
 
 Discord: Santoscapital
 
