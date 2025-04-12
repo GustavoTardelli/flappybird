@@ -134,6 +134,10 @@ const coin = {
             gameOver = true;
             // Clear trail when game is over
             this.trail = [];
+            // Turn off shadow
+            this.shadowEnabled = false;
+            // Update shadow button text
+            shadowButton.textContent = '👥 Shadow: Off';
         }
     },
     jump() {
